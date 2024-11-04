@@ -9,9 +9,9 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ... }:
   let
-    inherit (self) outputs;
+    inherit (self) inputs outputs;
 
     system = "x86_64-linux";
 

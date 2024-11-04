@@ -8,26 +8,22 @@
     specialArgs ? {},
     stateVersion,
   }:
-  nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-
-    specialArgs = {
+  let
+    defaultSpecialArgs = {
       inherit
         hostname
         username
         stateVersion;
-    } // specialArgs;
+    };
+  in nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+
+    specialArgs = defaultSpecialArgs // specialArgs;
 
     modules = [
-      ../nixos
+      ../nixos/configuration.nix
       home-manager.nixosModules.home-manager
       {
-        system.stateVersion = stateVersion;
-
-        users.users.${username} = {
-          isNormalUser = true;
-        };
-
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.users.${username} = { ... }: {
@@ -36,9 +32,7 @@
           ] ++ homeModules;
         };
 
-        # Optionally, use home-manager.extraSpecialArgs to pass
-        # arguments to home.nix
-        # home-manager.extraSpecialArgs = 
+        home-manager.extraSpecialArgs = defaultSpecialArgs // specialArgs;
       }
     ] ++ modules;
   };
