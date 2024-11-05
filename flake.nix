@@ -18,8 +18,28 @@
     pkgs = import nixpkgs { inherit system; };
     pkgs-unstable = import nixpkgs { inherit system; };
   in {
-    # nixosModules = import ./nixos;
-    # homeManagerModules = import ./home-manager;
     lib = import ./lib { inherit nixpkgs home-manager; };
+
+    checks.${system}.nixos-test = 
+    let
+      specialArgs = {
+        username = "austin";
+        hostname = "machine";
+        stateVersion = "24.05";
+      };
+
+      nixosConfig = outputs.lib.mkHost specialArgs;
+    in pkgs.testers.runNixOSTest {
+      name = "nixos-test";
+      node.specialArgs = specialArgs;
+      nodes.machine = { ... }: {
+        imports = nixosConfig._module.args.modules;
+      };
+
+      testScript = ''
+        machine.start()
+        machine.wait_for_unit("default.target")
+      '';
+    };
   };
 }

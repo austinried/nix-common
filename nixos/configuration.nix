@@ -1,5 +1,7 @@
-{ pkgs, username, stateVersion, ... }: 
+{ pkgs, username, hostname, stateVersion, ... }: 
 {
+  networking.hostName = hostname;
+
   users.users.${username} = {
     isNormalUser = true;
   };
