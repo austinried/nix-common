@@ -18,7 +18,13 @@
     pkgs = import nixpkgs { inherit system; };
     pkgs-unstable = import nixpkgs { inherit system; };
   in {
-    lib = import ./lib { inherit nixpkgs home-manager; };
+    lib = import ./lib {
+      inherit
+        inputs
+        outputs
+        nixpkgs
+        home-manager;
+    };
 
     checks.${system}.nixos-test = 
     let

@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager }:
+{ inputs, outputs, nixpkgs, home-manager }:
 {
   mkHost = {
     hostname, 
@@ -6,13 +6,19 @@
     modules ? [],
     homeModules ? [],
     specialArgs ? {},
+    isPhysical ? (isWorkstation || false),
+    isWorkstation ? false,
     stateVersion,
   }:
   let
     defaultSpecialArgs = {
       inherit
+        inputs
+        outputs
         hostname
         username
+        isPhysical
+        isWorkstation
         stateVersion;
     };
   in nixpkgs.lib.nixosSystem {
