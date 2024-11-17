@@ -19,6 +19,7 @@
     gnomeExtensions.wireless-hid
     gnomeExtensions.wifi-qrcode
     gnomeExtensions.vitals
+    gnomeExtensions.clipboard-history
   ];
 
   dconf.settings = lib.mkIf isWorkstation (with lib.hm.gvariant; {
@@ -27,6 +28,7 @@
       clock-show-weekday = true;
       enable-hot-corners = true;
       show-battery-percentage = true;
+      enable-animations = true;
       color-scheme = "prefer-dark";
       icon-theme = "Papirus-Dark";
       font-name = "Cantarell 12";
@@ -42,8 +44,16 @@
       disable-user-extensions = false;
       enabled-extensions = [
         "appindicatorsupport@rgcjonas.gmail.com"
+        "drive-menu@gnome-shell-extensions.gcampax.github.com"
+        "user-theme@gnome-shell-extensions.gcampax.github.com"
+        "wifiqrcode@glerro.pm.me"
+        "wireless-hid@chlumskyvaclav.gmail.com"
+        "just-perfection-desktop@just-perfection"
+        "clipboard-history@alexsaveau.dev"
       ];
     };
+    # TODO: just perfection settings
+    "org/gnome/shell/extensions/just-perfection" = {};
   });
 
   home.stateVersion = stateVersion;
