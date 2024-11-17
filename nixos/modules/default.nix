@@ -1,6 +1,8 @@
 { lib, isWorkstation, ...}:
 {
-  imports = [ ]
+  imports = [
+    ./vm.nix
+  ]
   ++ lib.optionals isWorkstation [
     ./gnome.nix
   ];

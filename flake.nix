@@ -26,6 +26,21 @@
         home-manager;
     };
 
+    packages.${system} = {
+      # Helper script to run VM and connect to the spice display for copy/paste support
+      # Relies on the virtualisation config in file://./nixos/modules/vm.nix
+      run-nixos-vm = pkgs.writeShellApplication {
+        name = "run-nixos-vm";
+        runtimeInputs = [ pkgs.virt-viewer ];
+        text = ''
+          "./result/bin/run-$1-vm" & PID_QEMU="$!"
+          sleep 1 # I think some tools have an option to wait like -w
+          remote-viewer spice://127.0.0.1:5930
+          kill $PID_QEMU
+        '';
+      };
+    };
+
     checks.${system}.nixos-test = 
     let
       specialArgs = {
