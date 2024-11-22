@@ -1,6 +1,8 @@
-{ inputs, outputs, nixpkgs, home-manager }:
+importArgs@{ inputs, outputs, nixpkgs, home-manager }:
 {
   mkHost = {
+    inputs,
+    outputs,
     hostname, 
     username ? "austin",
     modules ? [],
@@ -12,9 +14,10 @@
   }:
   let
     defaultSpecialArgs = {
+      inputs = importArgs.inputs // inputs;
+      outputs = importArgs.outputs // outputs;
+
       inherit
-        inputs
-        outputs
         hostname
         username
         isPhysical
