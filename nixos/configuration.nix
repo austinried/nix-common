@@ -32,6 +32,8 @@
     systemPackages = with pkgs; [
       git
       micro
+      curl
+      wget
     ];
 
     variables = {
@@ -49,6 +51,8 @@
     fwupd.enable = isPhysical;
     hardware.bolt.enable = isPhysical;
     smartd.enable = isPhysical;
+
+    openssh.enable = true;
   };
 
   users.users.${username} = {

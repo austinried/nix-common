@@ -3,9 +3,9 @@
   programs.bash.enable = true;
   programs.starship.enable = true;
 
-  home.packages = with pkgs; [
-    
-  ]
+  # TODO: bashrc and other settings
+
+  home.packages = with pkgs; []
   ++ lib.optionals isWorkstation [
     eyedropper
     gnome-extension-manager
@@ -55,6 +55,12 @@
     # TODO: just perfection settings
     "org/gnome/shell/extensions/just-perfection" = {};
   });
+
+  # TODO: vscode settings
+  programs.vscode = lib.mkIf isWorkstation {
+    enable = true;
+    package = pkgs.vscodium;
+  };
 
   home.stateVersion = stateVersion;
 }
