@@ -1,5 +1,7 @@
 { pkgs, lib, isWorkstation, stateVersion, ... }:
 {
+  imports = [ ./modules ];
+
   programs.starship.enable = true;
   programs.bash = {
     enable = true;
@@ -10,8 +12,8 @@
       "cdspell" # automatically fix directory typos when changing directory
       "dirspell" # automatically fix directory typos when completing
       "globstar" # ** recursive glob
-      "histappend" # append to history, don't overwrite
-      "histverify" # expand, but don't automatically execute, history expansions
+      # "histappend" # append to history, don't overwrite
+      # "histverify" # expand, but don't automatically execute, history expansions
       "nocaseglob" # case-insensitive globbing
       "no_empty_cmd_completion" # do not TAB expand empty lines
       # check the window size after each command and, if necessary,
@@ -19,35 +21,47 @@
       "checkwinsize"
     ];
 
-    historyIgnore = [ "?" ];
-    historyControl = [
-      "erasedups"
-      "ignoredups"
-      "ignorespace"
-    ];
+    # historyIgnore = [ "?" ];
+    # historyControl = [
+    #   "erasedups"
+    #   "ignoredups"
+    #   "ignorespace"
+    # ];
 
-    initExtra = ''
-      # If there are multiple matches for completion, Tab should cycle through them
-      bind 'TAB:menu-complete'
-      # And Shift-Tab should cycle backwards
-      bind '"\e[Z": menu-complete-backward'
+    # initExtra = ''
+    #   # If there are multiple matches for completion, Tab should cycle through them
+    #   bind 'TAB:menu-complete'
+    #   # And Shift-Tab should cycle backwards
+    #   bind '"\e[Z": menu-complete-backward'
 
-      # Display a list of the matching files
-      bind "set show-all-if-ambiguous on"
+    #   # Display a list of the matching files
+    #   bind "set show-all-if-ambiguous on"
 
-      # Perform partial (common) completion on the first Tab press, only start
-      # cycling full results on the second Tab press (from bash version 5)
-      bind "set menu-complete-display-prefix on"
+    #   # Perform partial (common) completion on the first Tab press, only start
+    #   # cycling full results on the second Tab press (from bash version 5)
+    #   bind "set menu-complete-display-prefix on"
 
-      # Cycle through history based on characters already typed on the line
-      bind '"\e[A":history-search-backward'
-      bind '"\e[B":history-search-forward'
+    #   # Cycle through history based on characters already typed on the line
+    #   bind '"\e[A":history-search-backward'
+    #   bind '"\e[B":history-search-forward'
 
-      # Keep Ctrl-Left and Ctrl-Right working when the above are used
-      bind '"\e[1;5C":forward-word'
-      bind '"\e[1;5D":backward-word'
-    '';
+    #   # Keep Ctrl-Left and Ctrl-Right working when the above are used
+    #   bind '"\e[1;5C":forward-word'
+    #   bind '"\e[1;5D":backward-word'
+    # '';
   };
+
+  programs.atuin = {
+    enable = true;
+    # https://docs.atuin.sh/configuration/config/
+    settings = {
+      style = "compact";
+      filter_mode_shell_up_key_binding = "session";
+    };
+  };
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   home.packages = with pkgs; []
   ++ lib.optionals isWorkstation [
@@ -66,6 +80,8 @@
     gnomeExtensions.clipboard-history
   ];
 
+  # https://hoverbear.org/blog/declarative-gnome-configuration-in-nixos/
+  # https://github.com/nix-community/dconf2nix
   dconf.settings = lib.mkIf isWorkstation (with lib.hm.gvariant; {
     "org/gnome/desktop/interface" = {
       clock-format = "24h";
@@ -99,12 +115,6 @@
     # TODO: just perfection settings
     "org/gnome/shell/extensions/just-perfection" = {};
   });
-
-  # TODO: vscode settings
-  programs.vscode = lib.mkIf isWorkstation {
-    enable = true;
-    package = pkgs.vscodium;
-  };
 
   home.stateVersion = stateVersion;
 }
