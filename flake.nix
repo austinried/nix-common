@@ -17,12 +17,15 @@
 
     pkgs = import nixpkgs { inherit system; };
     pkgs-unstable = import nixpkgs { inherit system; };
+    pkgs-unfree = import nixpkgs { inherit system; config.allowUnfree = true; };
   in {
     lib = import ./lib {
       inherit
         inputs
         outputs
         nixpkgs
+        pkgs-unstable
+        pkgs-unfree
         home-manager;
     };
 

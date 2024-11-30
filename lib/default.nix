@@ -1,4 +1,4 @@
-importArgs@{ inputs, outputs, nixpkgs, home-manager }:
+importArgs@{ inputs, outputs, nixpkgs, pkgs-unstable, pkgs-unfree, home-manager }:
 {
   mkHost = {
     inputs,
@@ -18,6 +18,8 @@ importArgs@{ inputs, outputs, nixpkgs, home-manager }:
       outputs = importArgs.outputs // outputs;
 
       inherit
+        pkgs-unstable
+        pkgs-unfree
         hostname
         username
         isPhysical
