@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unfree, ... }:
 {
   programs.vscode = {
     enable = true;
@@ -8,7 +8,7 @@
       dracula-theme.theme-dracula
       pkief.material-icon-theme
 
-      mhutchie.git-graph
+      pkgs-unfree.vscode-extensions.mhutchie.git-graph
       mkhl.direnv
 
       jnoortheen.nix-ide

@@ -71,7 +71,7 @@
     papirus-icon-theme
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
 
-    gnome.gnome-tweaks
+    gnome-tweaks
     gnomeExtensions.appindicator
     gnomeExtensions.emoji-copy
     gnomeExtensions.just-perfection
