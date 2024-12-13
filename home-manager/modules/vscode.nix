@@ -16,6 +16,7 @@
       denoland.vscode-deno
       esbenp.prettier-vscode
     ];
+    mutableExtensionsDir = true;
 
     # {
     #   "window.titleBarStyle": "custom",
@@ -175,10 +176,10 @@
     #   "workbench.colorTheme": "Dracula Theme",
     # }
 
-    userSettings = {
-      "workbench.iconTheme" = "material-icon-theme";
-      "editor.fontFamily" = "'JetBrainsMono Nerd Font','monospace', monospace";
-      "workbench.colorTheme" = "Dracula Theme";
-    };
+    # userSettings = {
+    #   "workbench.iconTheme" = "material-icon-theme";
+    #   "editor.fontFamily" = "'JetBrainsMono Nerd Font','monospace', monospace";
+    #   "workbench.colorTheme" = "Dracula Theme";
+    # };
   };
 }
