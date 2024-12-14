@@ -143,6 +143,7 @@
         quick-settings-dark-mode = false;
         switcher-popup-delay = false;
       };
+
       "org/gnome/desktop/wm/keybindings" = {
         # Alt+Tab windows not grouped applications
         switch-applications = [ ];
@@ -154,6 +155,12 @@
       # Rebind Super+v so it can be used for history paste
       "org/gnome/desktop/wm/keybindings".toggle-message-tray = [ ];
       "org/gnome/shell/extensions/clipboard-history".toggle-menu = [ "<Super>v" ];
+
+      "org/gnome/mutter" = {
+        edge-tiling = true;
+        dynamic-workspaces = true;
+      };
+      "org/gnome/shell/app-switcher".current-workspace-only = true;
     }
   );
 
