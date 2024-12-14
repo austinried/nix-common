@@ -98,6 +98,8 @@
       gnomeExtensions.vitals
       gnomeExtensions.clipboard-history
 
+      clapper
+
       pkgs-unfree.discord
 
       nixd
@@ -144,6 +146,13 @@
         switcher-popup-delay = false;
       };
 
+      "org/gnome/shell".favorite-apps = [
+        "org.gnome.Nautilus.desktop"
+        "org.gnome.Console.desktop"
+        "firefox.desktop"
+        "codium.desktop"
+      ];
+
       "org/gnome/desktop/wm/keybindings" = {
         # Alt+Tab windows not grouped applications
         switch-applications = [ ];
@@ -155,6 +164,8 @@
       # Rebind Super+v so it can be used for history paste
       "org/gnome/desktop/wm/keybindings".toggle-message-tray = [ ];
       "org/gnome/shell/extensions/clipboard-history".toggle-menu = [ "<Super>v" ];
+
+      "org/gnome/settings-daemon/plugins/media-keys".home = [ "<Super>e" ];
 
       "org/gnome/mutter" = {
         edge-tiling = true;
