@@ -103,7 +103,6 @@
       nixd
       nil
       nixfmt-rfc-style
-      nix-direnv
     ];
 
   # https://hoverbear.org/blog/declarative-gnome-configuration-in-nixos/
