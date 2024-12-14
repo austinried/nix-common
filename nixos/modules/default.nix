@@ -1,10 +1,11 @@
-{ lib, isWorkstation, ...}:
+{ lib, isWorkstation, ... }:
 {
-  imports = [
-    ./vm.nix
-  ]
-  ++ lib.optionals isWorkstation [
-    ./gnome.nix
-    ./firefox.nix
-  ];
+  imports =
+    [
+      ./vm.nix
+    ]
+    ++ lib.optionals isWorkstation [
+      ./gnome.nix
+      ./firefox.nix
+    ];
 }

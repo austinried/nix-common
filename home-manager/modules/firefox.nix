@@ -2,7 +2,7 @@
 {
   programs.firefox = {
     enable = true;
-    
+
     profiles.default = {
       settings = {
         # "browser.startup.homepage" = "https://duckduckgo.com";
@@ -27,7 +27,10 @@
       search = {
         force = true;
         default = "DuckDuckGo";
-        order = [ "DuckDuckGo" "Google" ];
+        order = [
+          "DuckDuckGo"
+          "Google"
+        ];
       };
     };
   };

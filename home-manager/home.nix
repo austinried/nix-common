@@ -9,7 +9,7 @@
 {
   imports = [ ./modules ];
 
-  programs.starship = { 
+  programs.starship = {
     enable = true;
     settings = {
       nix_shell = {

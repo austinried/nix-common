@@ -12,7 +12,8 @@ let
     Value = "";
     Status = "locked";
   };
-in {
+in
+{
   programs.firefox = {
     enable = true;
 
