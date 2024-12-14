@@ -9,7 +9,15 @@
 {
   imports = [ ./modules ];
 
-  programs.starship.enable = true;
+  programs.starship = { 
+    enable = true;
+    settings = {
+      nix_shell = {
+        format = "via [$symbol$name]($style) ";
+        symbol = "❄️ ";
+      };
+    };
+  };
   programs.bash = {
     enable = true;
     enableVteIntegration = true;
