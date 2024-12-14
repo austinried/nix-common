@@ -7,5 +7,6 @@
     ++ lib.optionals isWorkstation [
       ./gnome.nix
       ./firefox.nix
+      ./japanese.nix
     ];
 }
