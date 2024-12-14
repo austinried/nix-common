@@ -7,6 +7,7 @@
   hostname,
   stateVersion,
   isPhysical,
+  isWorkstation,
   ...
 }:
 {
@@ -65,6 +66,8 @@
     smartd.enable = isPhysical;
 
     openssh.enable = true;
+
+    automatic-timezoned.enable = isWorkstation;
   };
 
   users.users.${username} = {
