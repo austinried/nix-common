@@ -11,9 +11,7 @@
   ...
 }:
 {
-  imports = [
-    ./modules
-  ];
+  imports = [ ./mixins ];
 
   networking.hostName = hostname;
 

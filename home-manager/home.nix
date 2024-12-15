@@ -7,7 +7,7 @@
   ...
 }:
 {
-  imports = [ ./modules ];
+  imports = [ ./mixins ];
 
   programs.starship = {
     enable = true;
