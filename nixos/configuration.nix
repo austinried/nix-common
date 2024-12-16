@@ -7,11 +7,10 @@
   hostname,
   stateVersion,
   isPhysical,
-  isWorkstation,
   ...
 }:
 {
-  imports = [ ./mixins ];
+  imports = [ ./modules ];
 
   networking.hostName = hostname;
 
@@ -59,13 +58,11 @@
   };
 
   services = {
+    openssh.enable = true;
+
     fwupd.enable = isPhysical;
     hardware.bolt.enable = isPhysical;
     smartd.enable = isPhysical;
-
-    openssh.enable = true;
-
-    automatic-timezoned.enable = isWorkstation;
   };
 
   users.users.${username} = {

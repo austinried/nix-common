@@ -1,13 +1,10 @@
 {
   pkgs,
-  pkgs-unfree,
-  lib,
-  isWorkstation,
   stateVersion,
   ...
 }:
 {
-  imports = [ ./mixins ];
+  imports = [ ./modules ];
 
   programs.starship = {
     enable = true;
@@ -81,18 +78,11 @@
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
-  home.packages =
-    with pkgs;
-    [ ]
-    ++ lib.optionals isWorkstation [
-      clapper
-
-      pkgs-unfree.discord
-
-      nixd
-      nil
-      nixfmt-rfc-style
-    ];
+  home.packages = with pkgs; [
+    nixd
+    nil
+    nixfmt-rfc-style
+  ];
 
   home.stateVersion = stateVersion;
 }

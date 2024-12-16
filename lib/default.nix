@@ -11,13 +11,16 @@ importArgs@{
     {
       inputs,
       outputs,
+
       hostname,
-      username ? "austin",
+      username,
+
       modules ? [ ],
       homeModules ? [ ],
       specialArgs ? { },
-      isPhysical ? (isWorkstation || false),
-      isWorkstation ? false,
+
+      isPhysical ? false,
+
       stateVersion,
     }:
     let
@@ -31,7 +34,6 @@ importArgs@{
           hostname
           username
           isPhysical
-          isWorkstation
           stateVersion
           ;
       };
@@ -41,23 +43,24 @@ importArgs@{
 
       specialArgs = defaultSpecialArgs // specialArgs;
 
-      modules = [
-        ../nixos/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "hm.bak";
-          home-manager.users.${username} =
-            { ... }:
-            {
-              imports = [
-                ../home-manager/home.nix
-              ] ++ homeModules;
-            };
+      modules =
+        [
+          ../nixos/configuration.nix
+        ]
+        ++ modules
+        ++ nixpkgs.lib.optionals (username != null) [
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "hm.bak";
 
-          home-manager.extraSpecialArgs = defaultSpecialArgs // specialArgs;
-        }
-      ] ++ modules;
+            home-manager.extraSpecialArgs = defaultSpecialArgs // specialArgs;
+
+            home-manager.users.${username} = {
+              imports = [ ../home-manager/home.nix ] ++ homeModules;
+            };
+          }
+        ];
     };
 }
