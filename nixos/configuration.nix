@@ -25,10 +25,7 @@
         flake-registry = "";
         # Workaround for https://github.com/NixOS/nix/issues/9574
         nix-path = config.nix.nixPath;
-        trusted-users = [
-          "root"
-          "${username}"
-        ];
+        trusted-users = [ "root" ] ++ lib.optionals (username != null) [ username ];
         warn-dirty = false;
       };
       # Disable channels
@@ -65,10 +62,12 @@
     smartd.enable = isPhysical;
   };
 
-  users.users.${username} = {
-    uid = 1000;
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
+  users.users = lib.mkIf (username != null) {
+    ${username} = {
+      uid = 1000;
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+    };
   };
 
   system.stateVersion = stateVersion;
