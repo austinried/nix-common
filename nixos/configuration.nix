@@ -19,6 +19,15 @@
       flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
     in
     {
+      optimise = {
+        automatic = true;
+        dates = [ "03:45" ];
+      };
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 30d";
+      };
       settings = {
         experimental-features = "flakes nix-command";
         # Disable global registry
