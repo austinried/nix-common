@@ -6,13 +6,22 @@
   ...
 }:
 let
-  module = "vscode";
+  module = "developer";
   cfg = config.common.${module};
 in
 {
-  options.common.${module}.enable = lib.mkEnableOption "Install VS Codium.";
+  options.common.${module}.enable = lib.mkEnableOption "Enable programs and settings for developers.";
 
   config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      nixd
+      nil
+      nixfmt-rfc-style
+    ];
+
+    programs.direnv.enable = true;
+    programs.direnv.nix-direnv.enable = true;
+
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;

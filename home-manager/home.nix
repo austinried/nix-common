@@ -70,19 +70,11 @@
     settings = {
       style = "compact";
       inline_height = 12;
+      search_mode_shell_up_key_binding = "prefix";
       filter_mode_shell_up_key_binding = "session";
       enter_accept = true;
     };
   };
-
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
-
-  home.packages = with pkgs; [
-    nixd
-    nil
-    nixfmt-rfc-style
-  ];
 
   home.stateVersion = stateVersion;
 }
