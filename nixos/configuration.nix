@@ -38,9 +38,16 @@
   environment = {
     systemPackages = with pkgs; [
       git
-      micro
       curl
       wget
+      pciutils
+      inetutils
+      lsof
+
+      micro
+      bat
+      btop
+      tldr
     ];
 
     variables = {
