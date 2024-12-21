@@ -52,6 +52,8 @@ in
           gnomeExtensions.wifi-qrcode
           gnomeExtensions.vitals
           gnomeExtensions.clipboard-history
+
+          vlc
         ];
 
         # https://hoverbear.org/blog/declarative-gnome-configuration-in-nixos/
