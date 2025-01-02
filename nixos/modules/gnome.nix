@@ -35,11 +35,13 @@ in
       {
         lib,
         pkgs,
-        pkgs-unfree,
+        pkgs-unstable,
         ...
       }:
       {
         home.packages = with pkgs; [
+          pkgs-unstable.ghostty
+
           eyedropper
           gnome-extension-manager
           papirus-icon-theme

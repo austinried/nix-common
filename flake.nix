@@ -13,6 +13,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       ...
     }:
@@ -22,7 +23,7 @@
       system = "x86_64-linux";
 
       pkgs = import nixpkgs { inherit system; };
-      pkgs-unstable = import nixpkgs { inherit system; };
+      pkgs-unstable = import nixpkgs-unstable { inherit system; };
       pkgs-unfree = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
