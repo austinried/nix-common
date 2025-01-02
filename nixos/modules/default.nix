@@ -3,5 +3,6 @@
     ./gnome.nix
     ./firefox.nix
     ./japanese.nix
+    ./developer.nix
   ];
 }

@@ -1,5 +1,3 @@
 {
-  imports = [
-    ./developer.nix
-  ];
+  imports = [ ];
 }
