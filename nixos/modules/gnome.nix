@@ -35,12 +35,12 @@ in
       {
         lib,
         pkgs,
-        pkgs-unstable,
+        inputs,
         ...
       }:
       {
         home.packages = with pkgs; [
-          pkgs-unstable.ghostty
+          inputs.ghostty.packages.${system}.ghostty
 
           eyedropper
           gnome-extension-manager
@@ -60,6 +60,7 @@ in
 
         # https://hoverbear.org/blog/declarative-gnome-configuration-in-nixos/
         # https://github.com/nix-community/dconf2nix
+        # https://nix-community.github.io/home-manager/index.xhtml#sec-option-types
         dconf.settings = with lib.hm.gvariant; {
           "org/gnome/desktop/interface" = {
             clock-format = "24h";
@@ -97,7 +98,7 @@ in
 
           "org/gnome/shell".favorite-apps = [
             "org.gnome.Nautilus.desktop"
-            "org.gnome.Console.desktop"
+            "com.mitchellh.ghostty.desktop"
             "firefox.desktop"
             "codium.desktop"
           ];
@@ -119,6 +120,9 @@ in
           "org/gnome/mutter" = {
             edge-tiling = true;
             dynamic-workspaces = true;
+
+            # Prevents "X is not responding" prompts
+            check-alive-timeout = 0;
           };
           "org/gnome/shell/app-switcher".current-workspace-only = true;
         };
