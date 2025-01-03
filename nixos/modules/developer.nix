@@ -13,7 +13,10 @@ in
   options.common.${module}.enable = lib.mkEnableOption "Enable programs and settings for developers.";
 
   config = lib.mkIf cfg.enable {
-    users.users.${username}.extraGroups = [ "adbusers" ];
+    users.users.${username}.extraGroups = [
+      "kvm"
+      "adbusers"
+    ];
 
     services.udev.packages = [
       pkgs.android-udev-rules
