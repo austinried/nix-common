@@ -122,7 +122,7 @@ in
             dynamic-workspaces = true;
 
             # Prevents "X is not responding" prompts
-            check-alive-timeout = 0;
+            check-alive-timeout = mkUint32 0;
           };
           "org/gnome/shell/app-switcher".current-workspace-only = true;
         };
