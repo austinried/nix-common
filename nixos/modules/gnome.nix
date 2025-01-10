@@ -56,6 +56,8 @@ in
           gnomeExtensions.clipboard-history
 
           vlc
+
+          ungoogled-chromium
         ];
 
         # https://hoverbear.org/blog/declarative-gnome-configuration-in-nixos/
