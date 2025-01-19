@@ -29,6 +29,8 @@ in
           nixd
           nil
           nixfmt-rfc-style
+
+          sqlitebrowser
         ];
 
         programs.direnv.enable = true;
