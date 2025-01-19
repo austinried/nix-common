@@ -22,6 +22,12 @@ in
       pkgs.android-udev-rules
     ];
 
+    virtualisation.waydroid.enable = true;
+
+    environment.systemPackages = with pkgs; [
+      wl-clipboard
+    ];
+
     home-manager.users.${username} =
       { pkgs, pkgs-unfree, ... }:
       {
