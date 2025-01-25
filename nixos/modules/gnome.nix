@@ -58,6 +58,8 @@ in
           vlc
 
           ungoogled-chromium
+
+          impression
         ];
 
         # https://hoverbear.org/blog/declarative-gnome-configuration-in-nixos/
