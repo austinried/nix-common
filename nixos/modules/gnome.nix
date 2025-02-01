@@ -35,12 +35,11 @@ in
       {
         lib,
         pkgs,
-        inputs,
         ...
       }:
       {
         home.packages = with pkgs; [
-          inputs.ghostty.packages.${system}.ghostty
+          ghostty
 
           eyedropper
           gnome-extension-manager
