@@ -57,6 +57,7 @@ in
           vlc
 
           ungoogled-chromium
+          thunderbird-latest
 
           impression
         ];
