@@ -39,6 +39,13 @@ in
           sqlitebrowser
         ];
 
+        programs.git = {
+          enable = true;
+          extraConfig = {
+            init.defaultBranch = "main";
+          };
+        };
+
         programs.direnv.enable = true;
         programs.direnv.nix-direnv.enable = true;
 
