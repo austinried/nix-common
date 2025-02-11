@@ -1,32 +1,23 @@
 {
   lib,
   config,
-  pkgs,
   username,
   ...
 }:
 let
-  module = "developer";
-  cfg = config.common.${module};
+  cfg = config.common.developer;
 in
 {
-  options.common.${module}.enable = lib.mkEnableOption "Enable programs and settings for developers.";
+  imports = [
+    ./android.nix
+  ];
+
+  options.common.developer = {
+    enable = lib.mkEnableOption "Programs and settings for developers.";
+  };
 
   config = lib.mkIf cfg.enable {
-    users.users.${username}.extraGroups = [
-      "kvm"
-      "adbusers"
-    ];
-
-    services.udev.packages = [
-      pkgs.android-udev-rules
-    ];
-
-    virtualisation.waydroid.enable = true;
-
-    environment.systemPackages = with pkgs; [
-      wl-clipboard
-    ];
+    common.developer.android.enable = lib.mkDefault true;
 
     home-manager.users.${username} =
       { pkgs, pkgs-unfree, ... }:
