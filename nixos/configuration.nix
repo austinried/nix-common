@@ -51,6 +51,7 @@
       wget
       pciutils
       inetutils
+      usbutils
       lsof
 
       micro
