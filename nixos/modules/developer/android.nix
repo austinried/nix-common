@@ -10,7 +10,9 @@ let
   cfg = config.common.developer.android;
 in
 {
-  options.common.developer.android.enable = lib.mkEnableOption "Android development tools.";
+  options.common.developer.android = {
+    enable = lib.mkEnableOption "Android development tools.";
+  };
 
   config = lib.mkIf cfg.enable {
     users.users.${username}.extraGroups = [

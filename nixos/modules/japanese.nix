@@ -6,12 +6,12 @@
   ...
 }:
 let
-  module = "japanese";
-  cfg = config.common.${module};
+  cfg = config.common.japanese;
 in
 {
-  options.common.${module}.enable =
-    lib.mkEnableOption "Enable Japanese input via ibus and mozc (for Gnome).";
+  options.common.japanese = {
+    enable = lib.mkEnableOption "Enable Japanese input via ibus and mozc (for Gnome).";
+  };
 
   config = lib.mkIf cfg.enable {
     fonts.packages = with pkgs; [
