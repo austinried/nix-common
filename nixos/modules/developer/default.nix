@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  username,
   ...
 }:
 let
@@ -18,27 +17,5 @@ in
 
   config = lib.mkIf cfg.enable {
     common.developer.android.enable = lib.mkDefault true;
-
-    home-manager.users.${username} =
-      { pkgs, pkgs-unfree, ... }:
-      {
-        home.packages = with pkgs; [
-          nixd
-          nil
-          nixfmt-rfc-style
-
-          sqlitebrowser
-        ];
-
-        programs.git = {
-          enable = true;
-          extraConfig = {
-            init.defaultBranch = "main";
-          };
-        };
-
-        programs.direnv.enable = true;
-        programs.direnv.nix-direnv.enable = true;
-      };
   };
 }

@@ -44,29 +44,6 @@
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
 
-  environment = {
-    systemPackages = with pkgs; [
-      git
-      curl
-      wget
-      pciutils
-      inetutils
-      usbutils
-      lsof
-
-      micro
-      bat
-      btop
-      tldr
-    ];
-
-    variables = {
-      EDITOR = "micro";
-      SYSTEMD_EDITOR = "micro";
-      VISUAL = "micro";
-    };
-  };
-
   programs = {
     nano.enable = lib.mkDefault false;
   };

@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   cfg = config.common.shell;
 in
@@ -8,6 +13,29 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      git
+
+      curl
+      wget
+
+      pciutils
+      inetutils
+      usbutils
+      lsof
+
+      micro
+      bat
+      btop
+      tldr
+    ];
+
+    home.sessionVariables = {
+      EDITOR = "micro";
+      SYSTEMD_EDITOR = "micro";
+      VISUAL = "micro";
+    };
+
     programs.bash = {
       enable = true;
       enableVteIntegration = true;

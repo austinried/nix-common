@@ -10,7 +10,7 @@ let
 in
 {
   options.common.developer.vscode = {
-    enable = lib.mkEnableOption "VS Code IDE";
+    enable = lib.mkEnableOption "Visual Studio Code IDE";
   };
 
   config = lib.mkIf cfg.enable {
@@ -20,21 +20,21 @@ in
 
       mutableExtensionsDir = false;
       extensions = with pkgs.vscode-extensions; [
-          mkhl.direnv
-          waderyan.gitblame
+        mkhl.direnv
+        waderyan.gitblame
 
-          dracula-theme.theme-dracula
-          pkief.material-icon-theme
+        dracula-theme.theme-dracula
+        pkief.material-icon-theme
 
-          jnoortheen.nix-ide
-          denoland.vscode-deno
-          esbenp.prettier-vscode
-          dart-code.dart-code
-          dart-code.flutter
-          hashicorp.terraform
+        jnoortheen.nix-ide
+        denoland.vscode-deno
+        esbenp.prettier-vscode
+        dart-code.dart-code
+        dart-code.flutter
+        hashicorp.terraform
 
-          pkgs-unfree.vscode-extensions.mhutchie.git-graph
-        ];
+        pkgs-unfree.vscode-extensions.mhutchie.git-graph
+      ];
     };
   };
 }
