@@ -55,5 +55,9 @@
           '';
         };
       };
+
+      nixosModules.default = import ./nixos/modules;
+
+      homeManagerModules.default = import ./home-manager/modules;
     };
 }
