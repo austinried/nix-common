@@ -9,6 +9,7 @@ in
 {
   imports = [
     ./android.nix
+    ./vscode.nix
   ];
 
   options.common.developer = {
@@ -17,5 +18,6 @@ in
 
   config = lib.mkIf cfg.enable {
     common.developer.android.enable = lib.mkDefault true;
+    common.developer.vscode.enable = lib.mkDefault true;
   };
 }

@@ -14,19 +14,6 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      git
-
-      curl
-      wget
-
-      pciutils
-      inetutils
-      usbutils
-      lsof
-
-      micro
-      bat
-      btop
       tldr
     ];
 
@@ -35,6 +22,10 @@ in
       SYSTEMD_EDITOR = "micro";
       VISUAL = "micro";
     };
+
+    programs.micro.enable = true;
+    programs.bat.enable = true;
+    programs.btop.enable = true;
 
     programs.bash = {
       enable = true;
@@ -53,6 +44,11 @@ in
         # update the values of LINES and COLUMNS.
         "checkwinsize"
       ];
+
+      shellAliases = {
+        ls = "ls --color";
+        ll = "ls -lhF";
+      };
 
       initExtra = ''
         # If there are multiple matches for completion, Tab should cycle through them

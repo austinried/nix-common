@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   inputs,
   username,
   hostname,
@@ -42,6 +43,18 @@
       registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
+
+  environment.systemPackages = with pkgs; [
+    git
+
+    curl
+    wget
+
+    pciutils
+    inetutils
+    usbutils
+    lsof
+  ];
 
   programs = {
     nano.enable = lib.mkDefault false;

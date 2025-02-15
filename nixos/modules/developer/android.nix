@@ -23,6 +23,8 @@ in
     virtualisation.waydroid.enable = true;
 
     environment.systemPackages = with pkgs; [
+      sqlitebrowser
+
       # enables clipboard sharing under wayland for waydroid
       wl-clipboard
     ];

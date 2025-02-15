@@ -1,9 +1,6 @@
 {
   imports = [
-    ./developer
-    ./firefox.nix
-    ./gnome.nix
+    ./developer.nix
     ./shell.nix
-    ./terminal.nix
   ];
 }
