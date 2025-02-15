@@ -27,6 +27,9 @@ in
         fonts.fontconfig.enable = true;
 
         dconf.settings = with lib.hm.gvariant; {
+          #
+          # tilix
+          #
           "com/gexperts/Tilix" = {
             prompt-on-close = true;
             sidebar-on-right = false;
@@ -49,32 +52,22 @@ in
             use-system-font = false;
             terminal-title = "\${id}: \${title}";
           };
-        };
 
-        programs.ghostty = {
-          enable = true;
-          enableBashIntegration = true;
-
-          settings = {
-            theme = "Dracula+";
-            window-theme = "ghostty";
-            window-padding-x = 4;
-            window-padding-color = "extend";
-            gtk-titlebar = false;
-            # gtk-titlebar-hide-when-maximized = true;
-            adw-toolbar-style = "flat";
+          #
+          # blackbox
+          #
+          "com/raggesilver/BlackBox" = {
+            font = "JetBrainsMonoNL Nerd Font Mono 11";
+            theme-dark = "Dracula";
+            style-preference = mkUint32 2;
+            terminal-bell = false;
+            terminal-padding = mkTuple [
+              (mkUint32 4)
+              (mkUint32 4)
+              (mkUint32 4)
+              (mkUint32 4)
+            ];
           };
-        };
-
-        programs.ssh = {
-          enable = true;
-
-          # fix for ghostty, otherwise backspace and other things break on some hosts
-          # https://ghostty.org/docs/help/terminfo#configure-ssh-to-fall-back-to-a-known-terminfo-entry
-          extraConfig = ''
-            Host *
-              SetEnv TERM=xterm-256color
-          '';
         };
       };
   };

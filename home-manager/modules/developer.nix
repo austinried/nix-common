@@ -17,7 +17,11 @@ in
       nixd
       nil
       nixfmt-rfc-style
+
+      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
+
+    fonts.fontconfig.enable = true;
 
     programs.git = {
       enable = true;
