@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 let
@@ -33,6 +34,9 @@ in
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
 
-    programs.mise.enable = true;
+    programs.mise = {
+      enable = true;
+      package = pkgs-unstable.mise;
+    };
   };
 }
