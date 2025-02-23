@@ -90,5 +90,10 @@ in
         enter_accept = true;
       };
     };
+
+    programs.tmux = {
+      enable = true;
+      mouse = true;
+    };
   };
 }
