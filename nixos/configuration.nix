@@ -54,6 +54,8 @@
     inetutils
     usbutils
     lsof
+
+    wireguard-tools
   ];
 
   programs = {
