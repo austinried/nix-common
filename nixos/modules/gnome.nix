@@ -45,6 +45,7 @@ in
           gnomeExtensions.clipboard-history
 
           ungoogled-chromium
+          google-chrome
           thunderbird-latest
 
           vlc
