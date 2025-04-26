@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 let
@@ -19,5 +20,12 @@ in
   config = lib.mkIf cfg.enable {
     common.developer.android.enable = lib.mkDefault true;
     common.developer.vscode.enable = lib.mkDefault true;
+
+    environment.systemPackages = with pkgs; [
+      gnumake
+      gcc
+      python3
+      nodejs_22
+    ];
   };
 }

@@ -27,6 +27,7 @@ in
           mutableExtensionsDir = false;
           extensions = with pkgs.vscode-extensions; [
             mkhl.direnv
+            editorconfig.editorconfig
             waderyan.gitblame
 
             dracula-theme.theme-dracula
