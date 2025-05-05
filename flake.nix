@@ -20,7 +20,7 @@
       ...
     }:
     let
-      inherit (self) inputs outputs;
+      inherit (self) inputs;
 
       system = "x86_64-linux";
 
@@ -35,7 +35,6 @@
       util = import ./util {
         inherit
           inputs
-          outputs
           nixpkgs
           pkgs-unstable
           pkgs-unfree

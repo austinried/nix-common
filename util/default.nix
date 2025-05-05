@@ -1,6 +1,5 @@
 importArgs@{
   inputs,
-  outputs,
   nixpkgs,
   pkgs-unstable,
   pkgs-unfree,
@@ -10,7 +9,6 @@ importArgs@{
   mkHost =
     {
       inputs,
-      outputs,
 
       hostname,
       username,
@@ -26,7 +24,6 @@ importArgs@{
     let
       defaultSpecialArgs = {
         inputs = importArgs.inputs // inputs;
-        outputs = importArgs.outputs // outputs;
 
         inherit
           pkgs-unstable
