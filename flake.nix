@@ -32,7 +32,7 @@
       };
     in
     {
-      lib = import ./lib {
+      util = import ./util {
         inherit
           inputs
           outputs
