@@ -24,10 +24,16 @@ in
 
     fonts.fontconfig.enable = true;
 
+    programs.bash.shellAliases = {
+      git-clean-branches = "git branch --merged | egrep -v '^\s*(\*.*|master|main|dev|develop)$' | xargs git branch -d";
+    };
+
     programs.git = {
       enable = true;
       extraConfig = {
         init.defaultBranch = "main";
+        pull.ff = "only";
+        fetch.prune = true;
       };
     };
 
