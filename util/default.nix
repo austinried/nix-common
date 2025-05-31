@@ -3,6 +3,7 @@ importArgs@{
   nixpkgs,
   pkgs-unstable,
   pkgs-unfree,
+  pkgs-unfree-unstable,
   home-manager,
 }:
 {
@@ -28,6 +29,7 @@ importArgs@{
         inherit
           pkgs-unstable
           pkgs-unfree
+          pkgs-unfree-unstable
           hostname
           username
           isPhysical

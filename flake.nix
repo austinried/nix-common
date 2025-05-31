@@ -30,6 +30,10 @@
         inherit system;
         config.allowUnfree = true;
       };
+      pkgs-unfree-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in
     {
       util = import ./util {
@@ -38,6 +42,7 @@
           nixpkgs
           pkgs-unstable
           pkgs-unfree
+          pkgs-unfree-unstable
           home-manager
           ;
       };
