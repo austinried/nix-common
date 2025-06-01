@@ -19,7 +19,7 @@ in
       nil
       nixfmt-rfc-style
 
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      nerd-fonts.jetbrains-mono
     ];
 
     fonts.fontconfig.enable = true;

@@ -21,7 +21,7 @@ in
           tilix
           blackbox-terminal
 
-          (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+          nerd-fonts.jetbrains-mono
         ];
 
         fonts.fontconfig.enable = true;

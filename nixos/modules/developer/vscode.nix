@@ -25,7 +25,8 @@ in
           package = pkgs.vscodium;
 
           mutableExtensionsDir = false;
-          extensions = with pkgs.vscode-extensions; [
+
+          profiles.default.extensions = with pkgs.vscode-extensions; [
             mkhl.direnv
             editorconfig.editorconfig
             waderyan.gitblame

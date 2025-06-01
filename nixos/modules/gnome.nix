@@ -21,7 +21,7 @@ in
 
     networking.networkmanager.enable = true;
 
-    hardware.pulseaudio.enable = false;
+    services.pulseaudio.enable = false;
     services.pipewire = {
       enable = true;
       pulse.enable = true;
@@ -33,7 +33,7 @@ in
         home.packages = with pkgs; [
           papirus-icon-theme
 
-          (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+          nerd-fonts.jetbrains-mono
 
           gnome-tweaks
           gnome-extension-manager
