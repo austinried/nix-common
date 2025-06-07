@@ -31,6 +31,8 @@ in
       enable = true;
       enableVteIntegration = true;
 
+      package = lib.mkIf config.common.standalone.enable null;
+
       shellOptions = [
         "autocd" # change directory without entering the 'cd' command
         "cdspell" # automatically fix directory typos when changing directory
@@ -89,11 +91,6 @@ in
         filter_mode_shell_up_key_binding = "session";
         enter_accept = true;
       };
-    };
-
-    programs.tmux = {
-      enable = true;
-      mouse = true;
     };
   };
 }
