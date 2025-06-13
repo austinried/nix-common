@@ -78,6 +78,9 @@ in
           format = "via [$symbol$name]($style) ";
           symbol = "❄️ ";
         };
+
+        gcloud.disabled = true;
+        terraform.disabled = true;
       };
     };
 
