@@ -12,7 +12,7 @@ importArgs@{
       inputs,
 
       hostname,
-      username,
+      username ? null,
 
       modules ? [ ],
       homeModules ? [ ],
@@ -42,24 +42,23 @@ importArgs@{
 
       specialArgs = defaultSpecialArgs // specialArgs;
 
-      modules =
-        [
-          ../nixos/configuration.nix
-        ]
-        ++ modules
-        ++ nixpkgs.lib.optionals (username != null) [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "hm.bak";
+      modules = [
+        ../nixos/configuration.nix
+      ]
+      ++ modules
+      ++ nixpkgs.lib.optionals (username != null) [
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.backupFileExtension = "hm.bak";
 
-            home-manager.extraSpecialArgs = defaultSpecialArgs // specialArgs;
+          home-manager.extraSpecialArgs = defaultSpecialArgs // specialArgs;
 
-            home-manager.users.${username} = {
-              imports = [ ../home-manager/home.nix ] ++ homeModules;
-            };
-          }
-        ];
+          home-manager.users.${username} = {
+            imports = [ ../home-manager/home.nix ] ++ homeModules;
+          };
+        }
+      ];
     };
 }
