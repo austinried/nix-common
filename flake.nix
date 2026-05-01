@@ -9,61 +9,44 @@
 
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      home-manager,
-      ...
-    }:
-    let
-      inherit (self) inputs;
+    inputs@{ ... }:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      { ... }:
+      {
+        imports = [
+          ./checks
+          ./modules/flake-parts
+        ];
 
-      system = "x86_64-linux";
+        systems = [ "x86_64-linux" ];
 
-      pkgs = import nixpkgs { inherit system; };
-      pkgs-unstable = import nixpkgs-unstable { inherit system; };
-      pkgs-unfree = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-      pkgs-unfree-unstable = import nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in
-    {
-      util = import ./util {
-        inherit
-          inputs
-          nixpkgs
-          pkgs-unstable
-          pkgs-unfree
-          pkgs-unfree-unstable
-          home-manager
-          ;
-      };
-
-      packages.${system} = {
-        # Helper script to run VM and connect to the spice display for copy/paste support
-        # Relies on the virtualisation config in file://./nixos/modules/vm.nix
-        run-nixos-vm = pkgs.writeShellApplication {
-          name = "run-nixos-vm";
-          runtimeInputs = [ pkgs.virt-viewer ];
-          text = ''
-            "./result/bin/run-$1-vm" & PID_QEMU="$!"
-            sleep 1 # I think some tools have an option to wait like -w
-            remote-viewer spice://127.0.0.1:5930
-            kill $PID_QEMU
-          '';
+        flake = {
+          flakeModules.default = import ./modules/flake-parts;
+          nixosModules.default = import ./modules/nixos;
+          homeManagerModules.default = import ./modules/home-manager;
         };
-      };
 
-      nixosModules.default = import ./nixos/modules;
-
-      homeManagerModules.default = import ./home-manager/modules;
-    };
+        perSystem =
+          { pkgs, ... }:
+          {
+            packages = {
+              run-nixos-vm = pkgs.writeShellApplication {
+                name = "run-nixos-vm";
+                runtimeInputs = [ pkgs.virt-viewer ];
+                text = ''
+                  "./result/bin/run-$1-vm" & PID_QEMU="$!"
+                  sleep 1 # I think some tools have an option to wait like -w
+                  remote-viewer spice://127.0.0.1:5930
+                  kill $PID_QEMU
+                '';
+              };
+            };
+          };
+      }
+    );
 }
