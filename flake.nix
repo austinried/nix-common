@@ -21,6 +21,7 @@
         imports = [
           ./checks
           ./modules/flake-parts
+          ./modules/flake-parts/internal
         ];
 
         systems = [ "x86_64-linux" ];
@@ -28,7 +29,7 @@
         flake = {
           flakeModules.default = import ./modules/flake-parts;
           nixosModules.default = import ./modules/nixos;
-          homeManagerModules.default = import ./modules/home-manager;
+          homeModules.default = import ./modules/home-manager;
         };
 
         perSystem =

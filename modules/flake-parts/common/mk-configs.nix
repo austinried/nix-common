@@ -32,12 +32,12 @@ in
       specialArgs = combinedSpecialArgs;
 
       modules = [
-        ../nixos
+        ../../nixos
       ]
       ++ modules
       ++ lib.optionals (users != [ ]) [
         inputs.home-manager.nixosModules.home-manager
-        ../nixos/home-manager
+        ../../nixos/home-manager
         {
           # all nixos-hm modules apply to all users by default
           # can be overridden on this option or on each submodule users option
@@ -58,7 +58,7 @@ in
                   _module.args = { inherit (user) username; };
 
                   imports = [
-                    ../home-manager
+                    ../../home-manager
                   ]
                   ++ lib.optionals (user ? modules) user.modules;
                 };
@@ -87,7 +87,7 @@ in
       // extraSpecialArgs;
 
       modules = [
-        ../home-manager
+        ../../home-manager
       ]
       ++ modules;
     };

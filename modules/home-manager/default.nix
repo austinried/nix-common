@@ -2,6 +2,7 @@
   lib,
   username,
   stateVersion,
+  pkgs,
   ...
 }:
 {
@@ -16,6 +17,15 @@
 
   home = {
     inherit username;
+
+    homeDirectory = lib.mkDefault (
+      if pkgs.stdenv.isLinux then
+        "/home/${username}"
+      else if pkgs.stdenv.isDarwin then
+        "/Users/${username}"
+      else
+        null
+    );
 
     stateVersion = lib.mkDefault stateVersion;
   };
