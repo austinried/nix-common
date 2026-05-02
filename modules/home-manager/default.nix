@@ -16,7 +16,7 @@
   ];
 
   home = {
-    inherit username;
+    inherit username stateVersion;
 
     homeDirectory = lib.mkDefault (
       if pkgs.stdenv.isLinux then
@@ -26,7 +26,5 @@
       else
         null
     );
-
-    stateVersion = lib.mkDefault stateVersion;
   };
 }

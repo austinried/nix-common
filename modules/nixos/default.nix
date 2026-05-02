@@ -1,5 +1,4 @@
 {
-  lib,
   hostname,
   stateVersion,
   ...
@@ -13,6 +12,6 @@
   networking.hostName = hostname;
 
   system = {
-    stateVersion = lib.mkDefault stateVersion;
+    inherit stateVersion;
   };
 }
