@@ -20,6 +20,7 @@
       {
         imports = [
           ./checks
+          ./packages
           ./modules/flake-parts
           ./modules/flake-parts/internal
         ];
@@ -30,23 +31,6 @@
           flakeModules.default = import ./modules/flake-parts;
           nixosModules.default = import ./modules/nixos;
           homeModules.default = import ./modules/home-manager;
-        };
-
-        perSystem =
-          { pkgs, ... }:
-          {
-            packages = {
-              run-nixos-vm = pkgs.writeShellApplication {
-                name = "run-nixos-vm";
-                runtimeInputs = [ pkgs.virt-viewer ];
-                text = ''
-                  "./result/bin/run-$1-vm" & PID_QEMU="$!"
-                  sleep 1 # I think some tools have an option to wait like -w
-                  remote-viewer spice://127.0.0.1:5930
-                  kill $PID_QEMU
-                '';
-              };
-            };
           };
       }
     );
