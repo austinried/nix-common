@@ -91,23 +91,7 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "templates": "templates"
-      }
-    },
-    "templates": {
-      "locked": {
-        "lastModified": 1760444628,
-        "narHash": "sha256-wkIx1uPjYVOOcho0SAknX3tw2U8vswKwC/uZ3U0HAxE=",
-        "owner": "NixOS",
-        "repo": "templates",
-        "rev": "2557dc639215476df149ae6842a1ae94d60a884c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "templates",
-        "type": "github"
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     }
   },
