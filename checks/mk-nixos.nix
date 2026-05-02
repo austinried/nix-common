@@ -51,7 +51,7 @@
                     # only set non-gui stuff that would be safe on non-nixos systems
                     # common.developer.enable = true;
                     # common.japanese.enable = true;
-                    # common.shell.enable = true;
+                    common.shell.enable = true;
                     # common.standalone.enable = false;
                     # common.terminal.enable = true;
                     # common.vscode.enable = true;
