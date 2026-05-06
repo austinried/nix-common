@@ -37,6 +37,7 @@ in
         init.defaultBranch = "main";
         pull.ff = "only";
         fetch.prune = true;
+        rerere.enabled = true;
       };
     };
 
