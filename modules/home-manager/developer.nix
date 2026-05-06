@@ -18,6 +18,9 @@ in
       nixd
       nil
       nixfmt-rfc-style
+      nh
+      nix-output-monitor
+      dix
 
       nerd-fonts.jetbrains-mono
     ];
