@@ -7,8 +7,11 @@
 
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager-unstable.url = "github:nix-community/home-manager";
+    home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs-unstable";
   };
 
   outputs =
@@ -16,20 +19,7 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (
       { ... }:
       {
-        imports = [
-          ./checks
-          ./packages
-          ./modules/flake-parts
-          ./modules/flake-parts/internal
-        ];
-
-        systems = [ "x86_64-linux" ];
-
-        flake = {
-          flakeModules.default = import ./modules/flake-parts;
-          nixosModules.default = import ./modules/nixos;
-          homeModules.default = import ./modules/home-manager;
-        };
+        imports = [ ./modules/flake-parts ];
       }
     );
 }

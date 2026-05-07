@@ -12,6 +12,8 @@ in
 {
   mkNixos =
     {
+      nixpkgs ? inputs.nixpkgs,
+      home-manager ? inputs.home-manager,
       system,
       hostname,
       stateVersion,
@@ -26,7 +28,7 @@ in
       // mkSpecialArgs system
       // specialArgs;
     in
-    inputs.nixpkgs.lib.nixosSystem {
+    nixpkgs.lib.nixosSystem {
       inherit system;
 
       specialArgs = combinedSpecialArgs;
@@ -36,7 +38,7 @@ in
       ]
       ++ modules
       ++ lib.optionals (users != [ ]) [
-        inputs.home-manager.nixosModules.home-manager
+        home-manager.nixosModules.home-manager
         ../../nixos/home-manager
         {
           # all nixos-hm modules apply to all users by default
@@ -71,14 +73,16 @@ in
 
   mkHomeManager =
     {
+      nixpkgs ? inputs.home-manager.inputs.nixpkgs,
+      home-manager ? inputs.home-manager,
       system,
       username,
       stateVersion,
       modules ? [ ],
       extraSpecialArgs ? { },
     }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = import inputs.nixpkgs { inherit system; };
+    home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs { inherit system; };
 
       extraSpecialArgs = {
         inherit username stateVersion;

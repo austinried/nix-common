@@ -1,5 +1,0 @@
-{
-  imports = [
-    ./nixd-config.nix
-  ];
-}

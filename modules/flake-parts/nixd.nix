@@ -3,6 +3,7 @@
 # https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md
 { common, ... }:
 {
+  # for flake-parts options evaulation
   debug = true;
 
   flake.nixosConfigurations.nixd = common.mkNixos {

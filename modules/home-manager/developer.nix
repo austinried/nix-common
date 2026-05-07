@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 let
@@ -46,7 +45,6 @@ in
 
     programs.mise = {
       enable = true;
-      package = pkgs-unstable.mise;
     };
   };
 }
