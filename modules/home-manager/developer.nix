@@ -16,7 +16,7 @@ in
     home.packages = with pkgs; [
       nixd
       nil
-      nixfmt-rfc-style
+      nixfmt
       nh
       nix-output-monitor
       dix
