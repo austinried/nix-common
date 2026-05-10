@@ -13,6 +13,7 @@
     ./vscode.nix
     ./terminal.nix
     ./japanese.nix
+    ./yadm.nix
   ];
 
   home = {
