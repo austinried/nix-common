@@ -184,17 +184,18 @@ in
             exit 0
           fi
 
-          # move repo config out of the way so clone/init works, move back after
+          # move repo and config out of the way so clone/init works, move back after
           mv "${repo}/config" /tmp/yadm-repo-config
+          rm -r "${repo}"
 
           if [ -n "${origin}" ]; then
             # system ssh config may break nix git/ssh, so use only the user config
             echo "Include \"${homeDirectory}/.ssh/config\"" > /tmp/ssh-config
             export GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -F /tmp/ssh-config"
 
-            run "${yadm}" clone -f "${origin}"
+            run "${yadm}" clone "${origin}"
           else
-            run "${yadm}" init -f
+            run "${yadm}" init
           fi
 
           mv /tmp/yadm-repo-config "${repo}/config"
