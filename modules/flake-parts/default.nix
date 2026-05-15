@@ -3,6 +3,7 @@
     ./common
     ./checks
     ./nixd.nix
+    ./shell.nix
   ];
 
   systems = [ "x86_64-linux" ];
