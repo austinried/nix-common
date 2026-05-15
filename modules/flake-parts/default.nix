@@ -2,7 +2,6 @@
   imports = [
     ./common
     ./checks
-    ./packages
     ./nixd.nix
   ];
 
@@ -16,4 +15,11 @@
 
     homeModules.default = import ../home-manager;
   };
+
+  perSystem =
+    { pkgs, ... }:
+    {
+      packages.run-nixos-vm = pkgs.callPackage ../../packages/run-nixos-vm { };
+      packages.dconf-mirror = pkgs.callPackage ../../packages/dconf-mirror { };
+    };
 }
