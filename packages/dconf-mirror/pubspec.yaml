@@ -4,3 +4,6 @@ environment:
 
 executables:
   dconf-mirror: main
+
+dependencies:
+  args: ^2.7.0

@@ -2,7 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:args/args.dart';
+
 const _cooldownMs = 500;
+
+final _configHome = Platform.environment['XDG_CONFIG_HOME'] ?? '~/.config';
 
 enum Prefer { dconf, file }
 
@@ -30,7 +34,7 @@ class WatchConfig {
     required this.prefer,
   });
 
-  factory WatchConfig.fromJson(Map<String, dynamic> json) {
+  factory WatchConfig.fromJson(Map<String, dynamic> json, String configDir) {
     final prefix = json['prefix'] as String;
 
     if (!prefix.endsWith('/') || !prefix.startsWith("/")) {
@@ -39,9 +43,18 @@ class WatchConfig {
       );
     }
 
+    var file = json['file'] as String?;
+    if (file != null) {
+      file =
+          !file.startsWith('/') ? '${configDir}/${file}' : _normalizeHome(file);
+    } else {
+      final parts = prefix.split('/').where((s) => s.isNotEmpty).toList();
+      file = '${configDir}/${parts.join('/')}.ini';
+    }
+
     return WatchConfig(
       prefix: prefix,
-      file: json['file'] as String,
+      file: file,
       prefer: Prefer.values.byName((json['prefer'] as String?) ?? 'dconf'),
     );
   }
@@ -52,10 +65,13 @@ class Config {
 
   Config({required this.watches});
 
-  factory Config.fromJson(Map<String, dynamic> json) {
+  factory Config.fromJson(Map<String, dynamic> json, String configDir) {
     return Config(
       watches: (json['watches'] as List)
-          .map((w) => WatchConfig.fromJson(w as Map<String, dynamic>))
+          .map((w) => WatchConfig.fromJson(
+                w as Map<String, dynamic>,
+                configDir,
+              ))
           .toList(),
     );
   }
@@ -73,9 +89,7 @@ class Watch {
 
   Watch(WatchConfig cfg)
       : prefix = cfg.prefix,
-        filepath = cfg.file.startsWith('~/')
-            ? '${Platform.environment['HOME']}/${cfg.file.substring(2)}'
-            : cfg.file,
+        filepath = cfg.file,
         prefer = cfg.prefer;
 
   Future<void> initSync() async {
@@ -91,6 +105,17 @@ class Watch {
 
     stderr.writeln('init $prefix -> $filepath');
     await _writeFile(await _readDconf());
+  }
+
+  Future<void> syncOnce(Prefer from) async {
+    _contentState = "";
+
+    switch (from) {
+      case Prefer.dconf:
+        await _onDconfChange();
+      case Prefer.file:
+        await _onFileChange();
+    }
   }
 
   Future<void> handleDconfChange() async {
@@ -185,16 +210,94 @@ Future<void> _watchFiles(List<Watch> watches) {
   return Future.wait(dirs.map((dir) => _watchDir(dir, byPath)));
 }
 
-Future<void> main(List<String> args) async {
-  if (args.length != 1) {
-    stderr.writeln('usage: dconf-mirror <config.json>');
+final _parser = ArgParser()
+  ..addOption(
+    'config',
+    abbr: 'c',
+    defaultsTo: '${_configHome}/dconf-mirror/config.json',
+    valueHelp: 'config-path',
+    help: 'Path to configuration file',
+  )
+  ..addOption(
+    'sync-dir',
+    abbr: 's',
+    valueHelp: 'sync-path',
+    help:
+        'Path to sync files to if watch file is relative.\nDefaults to parent directory of <config-path>',
+  )
+  ..addOption(
+    'once-from',
+    abbr: 'o',
+    allowed: Prefer.values.asNameMap().keys,
+    valueHelp: 'location',
+    help: 'Sync all configured watches once from <location> and exit',
+  )
+  ..addFlag(
+    'help',
+    abbr: 'h',
+    negatable: false,
+    help: 'Print this help message',
+  );
+
+void _printUsage() {
+  final usage = _parser.usage.splitMapJoin('\n', onNonMatch: (l) => '\t${l}');
+
+  stderr.writeln('Usage:');
+  stderr.writeln(usage);
+}
+
+ArgResults _parseArgs(List<String> args) {
+  try {
+    final res = _parser.parse(args);
+
+    if (res.flag('help')) {
+      _printUsage();
+      exit(0);
+    }
+
+    return res;
+  } catch (err) {
+    _printUsage();
     exit(1);
   }
+}
+
+Future<void> _sync(List<Watch> watches) async {
+  for (final w in watches) {
+    await w.initSync();
+  }
+
+  await Future.wait([
+    ...watches.map(_watchDconf),
+    _watchFiles(watches),
+  ]);
+}
+
+Future<void> _syncOnce(List<Watch> watches, Prefer from) async {
+  for (final w in watches) {
+    await w.syncOnce(from);
+  }
+}
+
+String _normalizeHome(String path) {
+  return path.startsWith('~/')
+      ? '${Platform.environment['HOME']}/${path.substring(2)}'
+      : path;
+}
+
+Future<void> main(List<String> rawArgs) async {
+  final args = _parseArgs(rawArgs);
+
+  final configFile = File(_normalizeHome(args.option('config')!));
+  final configDir = args.option('sync-dir') != null
+      ? Directory(_normalizeHome(args.option('sync-dir')!)).absolute
+      : configFile.parent.absolute;
 
   final Config config;
   try {
     config = Config.fromJson(
-      jsonDecode(await File(args[0]).readAsString()) as Map<String, dynamic>,
+      jsonDecode(await configFile.readAsString()) as Map<String, dynamic>,
+      configDir.path,
     );
   } catch (e) {
     stderr.writeln('invalid config: $e');
@@ -208,12 +311,10 @@ Future<void> main(List<String> args) async {
 
   final watches = config.watches.map(Watch.new).toList();
 
-  for (final w in watches) {
-    await w.initSync();
+  final onceFrom = args.option('once-from');
+  if (onceFrom != null) {
+    await _syncOnce(watches, Prefer.values.byName(onceFrom));
+  } else {
+    await _sync(watches);
   }
-
-  await Future.wait([
-    ...watches.map(_watchDconf),
-    _watchFiles(watches),
-  ]);
 }
