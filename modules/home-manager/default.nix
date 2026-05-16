@@ -7,6 +7,7 @@
 }:
 {
   imports = [
+    ./dconf-mirror.nix
     ./developer.nix
     ./shell.nix
     ./standalone.nix
