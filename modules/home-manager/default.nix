@@ -9,6 +9,7 @@
   imports = [
     ./dconf-mirror.nix
     ./developer.nix
+    ./dotfiles.nix
     ./shell.nix
     ./standalone.nix
     ./vscode.nix

@@ -26,6 +26,15 @@ in
       '';
     };
 
+    bootstrap = lib.mkOption {
+      type = with lib.types; nullOr path;
+      default = null;
+      description = ''
+        Bootstrap script to provide to yadm.
+        If set, yadm will use this script during clone.
+      '';
+    };
+
     settings = lib.mkOption {
       type = gitIni.type;
       default = { };
@@ -170,6 +179,11 @@ in
       xdg.configFile."yadm/config".source = gitIni.generate "yadm-config" cfg.settings;
       xdg.dataFile."yadm/repo.git/config".source = repoConfig;
 
+      xdg.configFile."yadm/bootstrap" = lib.mkIf (cfg.bootstrap != null) {
+        executable = true;
+        source = cfg.bootstrap;
+      };
+
       home.activation.yadm =
         let
           inherit (config.home) homeDirectory;
@@ -178,6 +192,8 @@ in
           repo = "${config.xdg.dataHome}/yadm/repo.git";
 
           origin = if cfg.origin != null then cfg.origin else "";
+
+          cloneArgs = [ ] ++ lib.optionals (cfg.bootstrap != null) [ "--bootstrap" ];
         in
         lib.hm.dag.entryAfter [ "writeBoundary" "reloadSystemd" ] ''
           if "${yadm}" rev-parse --git-dir >/dev/null 2>&1; then
@@ -193,7 +209,7 @@ in
             echo "Include \"${homeDirectory}/.ssh/config\"" > /tmp/ssh-config
             export GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -F /tmp/ssh-config"
 
-            run "${yadm}" clone "${origin}"
+            run "${yadm}" clone "${origin}" ${lib.join " " cloneArgs}
           else
             run "${yadm}" init
           fi
