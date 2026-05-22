@@ -23,9 +23,21 @@ in
       VISUAL = "micro";
     };
 
-    programs.micro.enable = true;
+    programs.micro = {
+      enable = true;
+      settings = {
+        colorscheme = "simple";
+      };
+    };
+    programs.btop = {
+      enable = true;
+      settings = {
+        color_theme = "Default";
+        theme_background = false;
+      };
+    };
+
     programs.bat.enable = true;
-    programs.btop.enable = true;
 
     programs.bash = {
       enable = true;
