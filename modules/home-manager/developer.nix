@@ -22,6 +22,8 @@ in
       dix
 
       nerd-fonts.jetbrains-mono
+
+      magic-wormhole
     ];
 
     fonts.fontconfig.enable = true;
