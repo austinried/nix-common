@@ -40,6 +40,33 @@ in
       };
     };
 
+    programs.gitui = {
+      enable = true;
+    };
+
+    programs.lazygit = {
+      enable = true;
+      settings = {
+        gui = {
+          nerdFontsVersion = "3";
+          showFileIcons = true;
+        };
+        git = {
+          pagers = [
+            { pager = "diff-so-fancy"; }
+          ];
+        };
+      };
+    };
+
+    programs.diff-so-fancy = {
+      enable = true;
+      enableGitIntegration = true;
+      settings = {
+        semIntegration = true;
+      };
+    };
+
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
 
