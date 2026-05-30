@@ -5,7 +5,10 @@ let
   mkSpecialArgs =
     system:
     {
-      inherit system inputs;
+      inherit system;
+
+      # remove self to prevent unnecessery evaluation when anything changes
+      inputs = removeAttrs inputs [ "self" ];
     }
     // mkPkgs system;
 in
