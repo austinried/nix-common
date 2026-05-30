@@ -46,13 +46,13 @@ in
         {
           # all nixos-hm modules apply to all users by default
           # can be overridden on this option or on each submodule users option
-          common.nixos-hm.users = lib.mkDefault (builtins.map ({ username, ... }: username) users);
+          common.nixos-hm.users = lib.mkDefault (map ({ username, ... }: username) users);
 
           # specialArgs attr set can't be accessed in a nixos module
           home-manager.extraSpecialArgs = combinedSpecialArgs;
 
           home-manager.users = builtins.listToAttrs (
-            builtins.map (
+            map (
               user:
               assert user.username != null;
               assert if users ? modules then builtins.isList user.modules else true;
