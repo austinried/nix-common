@@ -9,12 +9,14 @@
   flake.nixosConfigurations.nixd = common.mkNixos {
     system = "x86_64-linux";
     hostname = "test";
-    stateVersion = "25.11";
+
     modules = [
       {
         boot.loader.systemd-boot.enable = true;
         fileSystems."/".device = "/dev/sda1";
         fileSystems."/".fsType = "ext4";
+
+        system.stateVersion = "25.11";
       }
     ];
   };
@@ -22,6 +24,11 @@
   flake.homeConfigurations.nixd = common.mkHomeManager {
     system = "x86_64-linux";
     username = "austin";
-    stateVersion = "25.11";
+
+    modules = [
+      {
+        home.stateVersion = "25.11";
+      }
+    ];
   };
 }

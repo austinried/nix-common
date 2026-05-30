@@ -1,8 +1,4 @@
-{
-  hostname,
-  stateVersion,
-  ...
-}:
+{ hostname, ... }:
 {
   imports = [
     ./configuration.nix
@@ -10,8 +6,4 @@
   ];
 
   networking.hostName = hostname;
-
-  system = {
-    inherit stateVersion;
-  };
 }

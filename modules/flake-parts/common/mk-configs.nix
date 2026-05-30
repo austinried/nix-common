@@ -19,14 +19,13 @@ in
       home-manager ? inputs.home-manager,
       system,
       hostname,
-      stateVersion,
       users ? [ ],
       specialArgs ? { },
       modules ? [ ],
     }:
     let
       combinedSpecialArgs = {
-        inherit hostname stateVersion;
+        inherit hostname;
       }
       // mkSpecialArgs system
       // specialArgs;
@@ -80,7 +79,6 @@ in
       home-manager ? inputs.home-manager,
       system,
       username,
-      stateVersion,
       modules ? [ ],
       extraSpecialArgs ? { },
     }:
@@ -88,7 +86,7 @@ in
       pkgs = import nixpkgs { inherit system; };
 
       extraSpecialArgs = {
-        inherit username stateVersion;
+        inherit username;
       }
       // mkSpecialArgs system
       // extraSpecialArgs;

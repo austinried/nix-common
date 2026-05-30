@@ -3,31 +3,43 @@
   perSystem =
     { system, ... }:
     let
-      baseArgs = {
-        inherit system;
-        username = "austin";
-        stateVersion = "25.11";
-      };
-    in
-    {
-      checks.mkHomeManager-minimal = (common.mkHomeManager baseArgs).activationPackage;
-
-      checks.mkHomeManager-full =
-        (common.mkHomeManager (
-          baseArgs
+      mkCheck =
+        args@{
+          modules ? [ ],
+          ...
+        }:
+        common.mkHomeManager (
+          args
           // {
+            inherit system;
+
+            username = "austin";
+
             modules = [
               {
-                common.developer.enable = true;
-                common.japanese.enable = true;
-                common.shell.enable = true;
-                common.standalone.enable = false;
-                common.terminal.enable = true;
-                common.vscode.enable = true;
-                common.yadm.enable = true;
+                home.stateVersion = "25.11";
               }
-            ];
+            ]
+            ++ modules;
           }
-        )).activationPackage;
+        );
+    in
+    {
+      checks.mkHomeManager-minimal = (mkCheck { }).activationPackage;
+
+      checks.mkHomeManager-full =
+        (mkCheck {
+          modules = [
+            {
+              common.developer.enable = true;
+              common.japanese.enable = true;
+              common.shell.enable = true;
+              common.standalone.enable = false;
+              common.terminal.enable = true;
+              common.vscode.enable = true;
+              common.yadm.enable = true;
+            }
+          ];
+        }).activationPackage;
     };
 }
