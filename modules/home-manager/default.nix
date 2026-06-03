@@ -11,7 +11,7 @@
     ./dotfiles.nix
     ./shell.nix
     ./standalone.nix
-    ./vscode.nix
+    ./vscodium.nix
     ./terminal.nix
     ./japanese.nix
     ./yadm.nix

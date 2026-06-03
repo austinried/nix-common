@@ -1,7 +1,7 @@
 args:
-import ./mk-module args "vscode" {
+import ./mk-module args "vscodium" {
   config =
-    { cfg, perUser, ... }:
+    { perUser, ... }:
     {
       home-manager.users = perUser (
         username:
@@ -11,7 +11,7 @@ import ./mk-module args "vscode" {
           ...
         }:
         {
-          programs.vscode = {
+          programs.vscodium = {
             enable = true;
             package = pkgs.vscodium;
 

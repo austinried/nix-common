@@ -1,7 +1,7 @@
 args:
 import ./mk-module args "terminal" {
   config =
-    { cfg, perUser, ... }:
+    { perUser, ... }:
     {
       home-manager.users = perUser (
         username:

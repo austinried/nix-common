@@ -36,7 +36,7 @@
               common.shell.enable = true;
               common.standalone.enable = false;
               common.terminal.enable = true;
-              common.vscode.enable = true;
+              common.vscodium.enable = true;
               common.yadm.enable = true;
             }
           ];

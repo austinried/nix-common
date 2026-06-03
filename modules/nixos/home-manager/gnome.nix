@@ -5,7 +5,7 @@ import ./mk-module args "gnome" {
   };
 
   config =
-    { cfg, perUser, ... }:
+    { perUser, ... }:
     {
       services.xserver.enable = true;
       services.displayManager.gdm.enable = true;

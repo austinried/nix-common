@@ -11,7 +11,7 @@ lib: {
   perUser =
     users: value:
     (lib.pipe users [
-      (builtins.map (name: {
+      (map (name: {
         inherit name;
 
         value = if builtins.isFunction value then value name else value;

@@ -6,15 +6,15 @@
   ...
 }:
 let
-  cfg = config.common.vscode;
+  cfg = config.common.vscodium;
 in
 {
-  options.common.vscode = {
+  options.common.vscodium = {
     enable = lib.mkEnableOption "Visual Studio Code IDE";
   };
 
   config = lib.mkIf cfg.enable {
-    programs.vscode = {
+    programs.vscodium = {
       enable = true;
       package = pkgs.vscodium;
 

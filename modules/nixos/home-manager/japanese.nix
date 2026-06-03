@@ -5,7 +5,7 @@ import ./mk-module args "japanese" {
   };
 
   config =
-    { cfg, perUser, ... }:
+    { perUser, ... }:
     {
       fonts.packages = with pkgs; [
         noto-fonts

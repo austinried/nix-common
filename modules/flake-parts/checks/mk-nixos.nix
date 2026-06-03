@@ -41,7 +41,7 @@
               common.nixos-hm.gnome.enable = true;
               common.nixos-hm.japanese.enable = true;
               common.nixos-hm.terminal.enable = true;
-              common.nixos-hm.vscode.enable = true;
+              common.nixos-hm.vscodium.enable = true;
             }
           ];
 
@@ -57,7 +57,7 @@
                   common.shell.enable = true;
                   # common.standalone.enable = false;
                   # common.terminal.enable = true;
-                  # common.vscode.enable = true;
+                  # common.vscodium.enable = true;
                   common.yadm.enable = true;
 
                   home.stateVersion = "25.11";

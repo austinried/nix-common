@@ -2,7 +2,7 @@
 args@{ pkgs, ... }:
 import ./mk-module args "android" {
   config =
-    { cfg, perUser, ... }:
+    { perUser, ... }:
     {
       users.users = perUser {
         extraGroups = [
@@ -14,12 +14,11 @@ import ./mk-module args "android" {
       virtualisation.waydroid.enable = true;
 
       environment.systemPackages = with pkgs; [
+        android-tools
         sqlitebrowser
 
         # enables clipboard sharing under wayland for waydroid
         wl-clipboard
       ];
-
-      programs.adb.enable = true;
     };
 }

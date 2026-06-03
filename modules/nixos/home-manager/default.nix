@@ -17,7 +17,7 @@ in
     ./gnome.nix
     ./japanese.nix
     ./terminal.nix
-    ./vscode.nix
+    ./vscodium.nix
   ];
 
   options.common.nixos-hm = {

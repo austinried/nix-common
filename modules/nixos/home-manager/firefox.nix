@@ -5,14 +5,17 @@ import ./mk-module args "firefox" {
   };
 
   config =
-    { cfg, perUser, ... }:
+    { perUser, ... }:
     {
       home-manager.users = perUser (
         username:
-        { ... }:
+        { config, lib, ... }:
         {
           programs.firefox = {
             enable = true;
+
+            # new defualt since 26.05
+            configPath = lib.mkDefault "${config.xdg.configHome}/mozilla/firefox";
 
             policies = {
               DisableTelemetry = true;
