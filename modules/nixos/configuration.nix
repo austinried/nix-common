@@ -11,7 +11,7 @@
     let
       flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
     in
-    {
+    lib.mkDefault {
       optimise = {
         automatic = true;
         dates = [ "03:45" ];
@@ -22,7 +22,7 @@
         options = "--delete-older-than 30d";
       };
       settings = {
-        experimental-features = "flakes nix-command";
+        experimental-features = "nix-command flakes";
         # Disable global registry
         flake-registry = "";
         # Workaround for https://github.com/NixOS/nix/issues/9574
