@@ -37,6 +37,13 @@
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
 
+  # Clean up channels leftovers
+  system.activationScripts.removeStaleChannels = ''
+    rm -f /root/.nix-defexpr/channels
+    rm -f /nix/var/nix/profiles/per-user/root/channels \
+          /nix/var/nix/profiles/per-user/root/channels-*-link
+  '';
+
   environment.systemPackages = with pkgs; [
     git
     jq
