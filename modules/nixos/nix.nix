@@ -11,11 +11,6 @@
     options = "--delete-older-than 30d";
   };
 
-  nix.optimise = lib.mkDefault {
-    automatic = true;
-    dates = [ "03:45" ];
-  };
-
   # Disable channels
   nix.channel.enable = false;
 
