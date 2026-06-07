@@ -5,35 +5,38 @@
   ...
 }:
 {
-  nix =
-    let
-      flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-    in
-    lib.mkDefault {
-      optimise = {
-        automatic = true;
-        dates = [ "03:45" ];
-      };
-      gc = {
-        automatic = true;
-        dates = "weekly";
-        options = "--delete-older-than 30d";
-      };
-      settings = {
-        experimental-features = "nix-command flakes";
-        # Disable global registry
-        flake-registry = "";
-        # Workaround for https://github.com/NixOS/nix/issues/9574
-        nix-path = config.nix.nixPath;
-        trusted-users = [ "root" ];
-        warn-dirty = false;
-      };
-      # Disable channels
-      channel.enable = false;
-      # Make flake registry and nix path match flake inputs
-      registry = lib.mapAttrs (_: flake: { inherit flake; }) flakeInputs;
-      nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-    };
+  nix.gc = lib.mkDefault {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
+  nix.optimise = lib.mkDefault {
+    automatic = true;
+    dates = [ "03:45" ];
+  };
+
+  # Disable channels
+  nix.channel.enable = false;
+
+  # Make flake registry and nix path match flake inputs nixpkgs
+  nix.registry = {
+    nixpkgs.flake = inputs.nixpkgs;
+  };
+  nix.nixPath = [
+    "nixpkgs=flake:nixpkgs"
+  ];
+
+  nix.settings = {
+    experimental-features = "nix-command flakes";
+    warn-dirty = false;
+
+    # Disable global registry
+    flake-registry = "";
+
+    # Workaround for https://github.com/NixOS/nix/issues/9574
+    nix-path = config.nix.nixPath;
+  };
 
   # Clean up channels leftovers
   system.activationScripts.removeStaleChannels = ''
