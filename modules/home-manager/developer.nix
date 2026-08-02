@@ -65,7 +65,7 @@ in
       enable = true;
       enableGitIntegration = true;
       settings = {
-        semIntegration = true;
+        semIntegration = false;
       };
     };
 
